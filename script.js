@@ -68,21 +68,16 @@ function activateTask(startStopTime, currentTime, resetTime) {
 
   // Listener on start-stop buttons
   startStopTime.addEventListener("click", (element) => {
-    if (!element.target.classList.contains("pause")) {
-      element.target.classList.add("pause");
+    if (element.target.classList.contains("active")) {
+      element.target.classList.remove("active");
       clearInterval(intervalId);
-    } else {
-      element.target.classList.remove("pause");
-      //start timer from 0
+    } else if (!element.target.classList.contains("active")) {
+      element.target.classList.add("active");
       startTime = Date.now();
       intervalId = setInterval(() => {
         update(startTime, currentTime);
       }, 10);
     }
-  });
-
-  resetTime.addEventListener("click", () => {
-    document.getElementById("stopwatch").textContent = "00:00.00";
   });
 }
 
@@ -108,3 +103,7 @@ function update(startTime, currenTime) {
 //   if (running) return;
 //   document.getElementById("stopwatch").textContent = "00:00.00";
 // }
+
+// resetTime.addEventListener("click", () => {
+//   document.getElementById("stopwatch").textContent = "00:00.00";
+// });
