@@ -57,57 +57,52 @@ function addTask(description) {
 
   // ADD HTML TO PAGE - TASK CONTAINER - END
 
-  console.log(newStartStop, currentTime, newReset);
-
   activateTask(newStartStop, currentTime, newReset);
 }
 
 function activateTask(startStopTime, currentTime, resetTime) {
   let startTime;
   let intervalId;
-  let stopwatch;
 
   // Listener on start-stop buttons
   startStopTime.addEventListener("click", (element) => {
-    if (!element.target.classList.contains("stopRunning")) {
-      element.target.classList.add("stopRunning");
+    if (!element.target.classList.contains("pause")) {
+      element.target.classList.add("pause");
       clearInterval(intervalId);
     } else {
-      element.target.classList.remove("stopRunning");
-
-      // start timer
+      element.target.classList.remove("pause");
+      //start timer from 0
       startTime = Date.now();
       intervalId = setInterval(() => {
         update(startTime, currentTime);
       }, 10);
-
-      //
     }
   });
 
   resetTime.addEventListener("click", () => {
-    stopwatch = reset(currenTime);
+    document.getElementById("stopwatch").textContent = "00:00.00";
   });
 }
 
-function start() {
-  startTime = Date.now();
-  intervalId = setInterval(update, 10);
-}
+// function start() {
+//   startTime = Date.now();
+//   intervalId = setInterval(update, 10);
+// }
 
 function update(startTime, currenTime) {
   let elapsed = Date.now() - startTime;
-  let minutes = Math.floor(elapsed / 60000);
-  let seconds = ((elapsed % 60000) / 1000).toFixed(3);
-  let display = `${minutes}:${seconds}`;
+  let hours = Math.floor(elapsed / 3600000);
+  let minutes = Math.floor((elapsed % 3600000) / 60000);
+  let seconds = ((elapsed % 60000) / 1000).toFixed(2);
+  let display = `${hours}:${minutes}:${seconds}`;
   currenTime.innerHTML = display;
 }
 
-function stop() {
-  clearInterval(intervalId);
-}
+// function stop() {
+//   clearInterval(intervalId);
+// }
 
-function reset() {
-  if (running) return;
-  document.getElementById("stopwatch").textContent = "00:00.000";
-}
+// function reset() {
+//   if (running) return;
+//   document.getElementById("stopwatch").textContent = "00:00.00";
+// }
