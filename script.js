@@ -40,9 +40,9 @@ function addTask(description) {
   const newIcon = document.createElement("i");
   newIcon.classList.add("fa-solid", "fa-stopwatch");
 
-  const newReset = document.createElement("button");
-  newReset.classList.add("reset");
-  newReset.textContent = "Reset";
+  const newDelete = document.createElement("button");
+  newDelete.classList.add("delete");
+  newDelete.textContent = "Delete";
 
   // Append the elements to the new task element
   newTask.appendChild(newStartStop);
@@ -50,17 +50,17 @@ function addTask(description) {
   newTimer.appendChild(currentTime);
   newTimer.appendChild(newIcon);
   newTask.appendChild(newDescription);
-  newTask.appendChild(newReset);
+  newTask.appendChild(newDelete);
 
   // Append the new task element to the task container
   taskContainer.appendChild(newTask);
 
   // ADD HTML TO PAGE - TASK CONTAINER - END
 
-  activateTask(newStartStop, currentTime, newReset);
+  activateTask(newStartStop, currentTime, newDelete);
 }
 
-function activateTask(startStopTime, currentTime, resetTime) {
+function activateTask(startStopTime, currentTime, deleteBtn) {
   let startTime;
   let intervalId;
 
@@ -68,16 +68,32 @@ function activateTask(startStopTime, currentTime, resetTime) {
 
   // Listener on start-stop buttons
   startStopTime.addEventListener("click", (element) => {
+    let previousTime = startStopTime.getAttribute("previous-time");
+
     if (element.target.classList.contains("active")) {
       element.target.classList.remove("active");
+
       clearInterval(intervalId);
     } else if (!element.target.classList.contains("active")) {
       element.target.classList.add("active");
-      startTime = Date.now();
-      intervalId = setInterval(() => {
-        update(startTime, currentTime);
-      }, 10);
+
+      if (previousTime == null) {
+        startTime = Date.now();
+        startStopTime.setAttribute("previous-time", startTime);
+        intervalId = setInterval(() => {
+          update(startTime, currentTime);
+        }, 10);
+      } else if (previousTime !== null) {
+        startTime = previousTime;
+        intervalId = setInterval(() => {
+          update(startTime, currentTime);
+        }, 10);
+      }
     }
+  });
+
+  deleteBtn.addEventListener("click", (element) => {
+    removeTask(deleteBtn.parentElement);
   });
 }
 
@@ -99,11 +115,6 @@ function update(startTime, currenTime) {
 //   clearInterval(intervalId);
 // }
 
-// function reset() {
-//   if (running) return;
-//   document.getElementById("stopwatch").textContent = "00:00.00";
-// }
-
-// resetTime.addEventListener("click", () => {
-//   document.getElementById("stopwatch").textContent = "00:00.00";
-// });
+function removeTask(task) {
+  task.remove();
+}
