@@ -64,6 +64,8 @@ function activateTask(startStopTime, currentTime, resetTime) {
   let startTime;
   let intervalId;
 
+  // need to switch the if else statement here or the user has to click twice to activate the button.
+
   // Listener on start-stop buttons
   startStopTime.addEventListener("click", (element) => {
     if (!element.target.classList.contains("pause")) {
