@@ -99,6 +99,7 @@ function activateTask(startStopTime, currentTime, resetBtn, deleteBtn) {
 
   resetBtn.addEventListener("click", () => {
     clearInterval(intervalId);
+    startStopTime.removeAttribute("previous-time");
     currentTime.innerHTML = "00:00:00";
   });
 
