@@ -73,23 +73,23 @@ function activateTask(startStopTime, currentTime, resetBtn, deleteBtn) {
 
   // Listener on start-stop buttons
   startStopTime.addEventListener("click", (element) => {
-    let previousTime = startStopTime.getAttribute("previous-time");
+    let previousElapsedTime = startStopTime.getAttribute("previous-time");
 
     if (element.target.classList.contains("active")) {
       element.target.classList.remove("active");
-
+      startStopTime.setAttribute("previous-time", Date.now() - startTime);
       clearInterval(intervalId);
     } else if (!element.target.classList.contains("active")) {
       element.target.classList.add("active");
 
-      if (previousTime == null) {
+      if (previousElapsedTime == null) {
         startTime = Date.now();
-        startStopTime.setAttribute("previous-time", startTime);
+
         intervalId = setInterval(() => {
           update(startTime, currentTime);
         }, 10);
-      } else if (previousTime !== null) {
-        startTime = previousTime;
+      } else if (previousElapsedTime !== null) {
+        startTime = Date.now() - previousElapsedTime;
         intervalId = setInterval(() => {
           update(startTime, currentTime);
         }, 10);
@@ -108,11 +108,6 @@ function activateTask(startStopTime, currentTime, resetBtn, deleteBtn) {
   });
 }
 
-// function start() {
-//   startTime = Date.now();
-//   intervalId = setInterval(update, 10);
-// }
-
 function update(startTime, currenTime) {
   let elapsed = Date.now() - startTime;
   let hours = Math.floor(elapsed / 3600000);
@@ -121,10 +116,6 @@ function update(startTime, currenTime) {
   let display = `${hours}:${minutes}:${seconds}`;
   currenTime.innerHTML = display;
 }
-
-// function stop() {
-//   clearInterval(intervalId);
-// }
 
 function removeTask(task) {
   task.remove();
