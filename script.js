@@ -98,7 +98,11 @@ function activateTask(startStopTime, currentTime, resetBtn, deleteBtn) {
   });
 
   resetBtn.addEventListener("click", () => {
+    //DO A STOP BEFORE RESETTING
+    startStopTime.classList.remove("active");
+    startStopTime.setAttribute("previous-time", Date.now() - startTime);
     clearInterval(intervalId);
+    //DO A STOP
     startStopTime.removeAttribute("previous-time");
     currentTime.innerHTML = "00:00:00";
   });
