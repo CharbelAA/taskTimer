@@ -40,9 +40,13 @@ function addTask(description) {
   const newIcon = document.createElement("i");
   newIcon.classList.add("fa-solid", "fa-stopwatch");
 
-  const newDelete = document.createElement("button");
-  newDelete.classList.add("delete");
-  newDelete.textContent = "Delete";
+  const resetBtn = document.createElement("button");
+  resetBtn.classList.add("reset");
+  resetBtn.textContent = "Reset";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("delete");
+  deleteBtn.textContent = "🗑";
 
   // Append the elements to the new task element
   newTask.appendChild(newStartStop);
@@ -50,17 +54,18 @@ function addTask(description) {
   newTimer.appendChild(currentTime);
   newTimer.appendChild(newIcon);
   newTask.appendChild(newDescription);
-  newTask.appendChild(newDelete);
+  newTask.appendChild(resetBtn);
+  newTask.appendChild(deleteBtn);
 
   // Append the new task element to the task container
   taskContainer.appendChild(newTask);
 
   // ADD HTML TO PAGE - TASK CONTAINER - END
 
-  activateTask(newStartStop, currentTime, newDelete);
+  activateTask(newStartStop, currentTime, resetBtn, deleteBtn);
 }
 
-function activateTask(startStopTime, currentTime, deleteBtn) {
+function activateTask(startStopTime, currentTime, resetBtn, deleteBtn) {
   let startTime;
   let intervalId;
 
@@ -92,8 +97,13 @@ function activateTask(startStopTime, currentTime, deleteBtn) {
     }
   });
 
-  deleteBtn.addEventListener("click", (element) => {
-    removeTask(deleteBtn.parentElement);
+  resetBtn.addEventListener("click", () => {
+    clearInterval(intervalId);
+    currentTime.innerHTML = "00:00:00";
+  });
+
+  deleteBtn.addEventListener("click", () => {
+    removeTask(resetBtn.parentElement);
   });
 }
 

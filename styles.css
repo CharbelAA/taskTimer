@@ -12,6 +12,9 @@ button {
   border: 3px;
   font-size: 20px;
 }
+button:hover {
+  background-color: #5b5b5e;
+}
 
 /* Add Task */
 .addTaskContainer {
@@ -33,6 +36,9 @@ button {
   flex-basis: 30%;
   height: 40px;
   border-radius: 5px 0 0 5px;
+}
+#taskInput:focus {
+  outline: none;
 }
 
 #addTaskBtn {
@@ -72,15 +78,27 @@ button {
 .timer {
   margin: auto;
   font-size: 30px;
+  flex-basis: 20%;
 }
 .timer i {
   padding: 10px;
+  font-size: 30px;
+  margin: auto;
 }
 
-.task i {
-  margin: auto;
-  font-size: 30px;
-}
 .description {
   margin: auto;
+}
+
+.reset {
+  margin: 0;
+  padding: 0;
+  flex-basis: 10%;
+}
+
+.delete {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  flex-basis: 5%;
 }
