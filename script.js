@@ -1,8 +1,16 @@
 const addTaskBtn = document.querySelector("#addTaskBtn");
+const descriptionInput = document.querySelector("#taskInput");
 
 addTaskBtn.addEventListener("click", () => {
   addTask(description());
   clearDescription();
+});
+
+descriptionInput.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    addTaskBtn.click();
+  }
 });
 
 function description() {
